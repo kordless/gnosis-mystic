@@ -4,6 +4,11 @@
 
 Gnosis Mystic is a comprehensive Python function debugging and introspection system that combines function hijacking, logging, and real-time monitoring with MCP (Model Context Protocol) integration. It enables AI assistants like Claude to directly debug, monitor, and control Python functions in real-time.
 
+## Insperation and Work
+Mystic was inspired by [Giantswarm's](https://giantswarm.io) [mcp-debug](https://github.com/giantswarm/mcp-debug).
+
+Code by fairly stock Claude Code. Prompts, code sketches, and planning by Claude Desktop using Gnosis Evolve tools.
+
 ## ✨ Key Features
 
 - 🎭 **Advanced Function Hijacking**: Cache, mock, block, redirect, or analyze any function

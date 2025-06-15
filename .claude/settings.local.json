@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(pip --version)",
+      "Bash(pip install:*)",
+      "Bash(pytest:*)",
+      "Bash(python:*)",
+      "Bash(rm:*)",
+      "Bash(true)",
+      "Bash(make test-cov:*)",
+      "Bash(make:*)",
+      "Bash(ruff check:*)"
+    ],
+    "deny": []
+  }
+}
