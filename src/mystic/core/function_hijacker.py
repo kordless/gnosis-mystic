@@ -734,3 +734,32 @@ def redirect(target_func, **kwargs):
 def analyze(**kwargs):
     """Analysis decorator."""
     return hijack_function(AnalysisStrategy(**kwargs))
+
+
+
+class HijackRegistry:
+    """Registry for tracking hijacked functions."""
+    
+    def __init__(self):
+        self._registry: Dict[str, CallHijacker] = {}
+        self._lock = threading.RLock()
+    
+    def register(self, name: str, hijacker: CallHijacker):
+        """Register a hijacked function."""
+        with self._lock:
+            self._registry[name] = hijacker
+    
+    def unregister(self, name: str):
+        """Unregister a hijacked function."""
+        with self._lock:
+            self._registry.pop(name, None)
+    
+    def get(self, name: str) -> Optional[CallHijacker]:
+        """Get a hijacker by name."""
+        with self._lock:
+            return self._registry.get(name)
+    
+    def list_all(self) -> List[str]:
+        """List all hijacked function names."""
+        with self._lock:
+            return list(self._registry.keys())

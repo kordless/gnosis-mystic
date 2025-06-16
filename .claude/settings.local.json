@@ -10,7 +10,15 @@
       "Bash(true)",
       "Bash(make test-cov:*)",
       "Bash(make:*)",
-      "Bash(ruff check:*)"
+      "Bash(ruff check:*)",
+      "Bash(grep:*)",
+      "Bash(sed:*)",
+      "Bash(cp:*)",
+      "Bash(ls:*)",
+      "Bash(awk:*)",
+      "Bash(chmod:*)",
+      "Bash(mkdir:*)",
+      "Bash(git rm:*)"
     ],
     "deny": []
   }

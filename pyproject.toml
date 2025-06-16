@@ -50,6 +50,7 @@ dependencies = [
     "httpx>=0.25.0",
     "sse-starlette>=1.8.0",
     "uvicorn>=0.24.0",
+    "fastapi>=0.104.0",
     
     # REPL and UI
     "prompt-toolkit>=3.0.0",
@@ -106,8 +107,8 @@ Repository = "https://github.com/gnosis/gnosis-mystic"
 "Bug Tracker" = "https://github.com/gnosis/gnosis-mystic/issues"
 
 [project.scripts]
-mystic = "mystic.main:cli"
-gnosis-mystic = "mystic.main:cli"
+mystic = "mystic.cli:cli"
+gnosis-mystic = "mystic.cli:cli"
 
 [project.entry-points."mystic.plugins"]
 core = "mystic.core:CorePlugin"
@@ -194,14 +195,16 @@ disallow_incomplete_defs = false
 [tool.pytest.ini_options]
 minversion = "7.0"
 addopts = [
-    "--cov=mystic",
-    "--cov-report=term-missing",
-    "--cov-report=html",
-    "--cov-report=xml",
     "--strict-markers",
     "--strict-config",
     "-ra",
 ]
+# Coverage options (requires pytest-cov):
+# "--cov=mystic",
+# "--cov-report=term-missing", 
+# "--cov-report=html",
+# "--cov-report=xml",
+
 testpaths = ["tests"]
 filterwarnings = [
     "error",

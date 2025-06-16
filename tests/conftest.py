@@ -1,8 +1,15 @@
 """Test fixtures for Gnosis Mystic tests."""
 
 import pytest
+import sys
+from pathlib import Path
+
+# Add src directory to path for imports
+src_path = Path(__file__).parent.parent / "src"
+sys.path.insert(0, str(src_path))
 
 from mystic import MysticConfig
+
 
 
 @pytest.fixture
