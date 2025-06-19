@@ -1,10 +1,10 @@
 # Gnosis Mystic 🔮
 
-**Universal Python Function Control Layer with AI Integration**
+**AI-Powered Python Function Analysis and Control**
 
-Gnosis Mystic transforms any Python codebase into an intelligent, self-optimizing system through runtime function hijacking, automatic performance optimization, and AI-powered analysis—all without modifying source code.
+Gnosis Mystic gives AI assistants direct access to your Python functions through runtime hijacking and intelligent analysis. Add minimal decorators, and Claude can inspect, optimize, and control your code in real-time.
 
-## Insperation and Work
+## Inspiration and Work
 Mystic was inspired by [Giantswarm's](https://giantswarm.io) [mcp-debug](https://github.com/giantswarm/mcp-debug).
 
 Code by fairly stock Claude Code. Prompts, code sketches, and planning by Claude Desktop using Gnosis Evolve tools.
@@ -12,65 +12,72 @@ Code by fairly stock Claude Code. Prompts, code sketches, and planning by Claude
 ## ✨ Why Gnosis Mystic?
 
 ### The Problem
-Traditional debugging and optimization requires:
-- Modifying source code for logging/metrics
-- Redeploying to add caching
-- Complex profilers for performance analysis
-- Manual security audits for sensitive data
-- Time-consuming debugging sessions
+AI assistants are blind to your running code:
+- They can't see function performance in real-time
+- No direct access to runtime behavior and state
+- Can't dynamically test optimizations
+- Limited to static code analysis
+- No way to experiment with function modifications safely
 
 ### The Solution
-Gnosis Mystic provides a **universal control layer** that can:
-- **Make any function 1000x faster** with intelligent caching
-- **Protect sensitive data** automatically in logs
-- **Switch implementations** based on environment (dev/test/prod)
-- **Time-travel debug** to any point in execution history
-- **Analyze performance** without profilers or code changes
-- **Control function behavior** dynamically at runtime
+Gnosis Mystic creates a **direct AI-to-code interface**:
+- **AI sees everything**: Real-time function calls, performance, and behavior
+- **Safe experimentation**: Test caching, mocking, and optimizations instantly
+- **Runtime control**: AI can modify function behavior without code changes
+- **Intelligent analysis**: AI discovers bottlenecks and suggests improvements
+- **Live debugging**: AI can inspect function state during execution
 
 ## 🚀 Core Capabilities
 
-### 1. Performance Optimization
+### 1. AI-Visible Function Monitoring
 ```python
-# Before: 2-3 second API call
-user_data = fetch_user_data(12345)
-
-# After: Add caching with one decorator
-@hijack_function(CacheStrategy(duration="5m"))
+@hijack_function(AnalysisStrategy())
 def fetch_user_data(user_id):
-    # Original slow code unchanged
-    
-# Result: 0.000 seconds (literally instant!)
+    response = requests.get(f"https://api.example.com/users/{user_id}")
+    return response.json()
+
+# Claude can now see:
+# - Call frequency and patterns
+# - Performance metrics
+# - Parameter distributions
+# - Error rates and types
 ```
 
-### 2. Security-Aware Logging
+### 2. AI-Controlled Optimization
 ```python
-@FunctionLogger(filter_sensitive=True).log_function()
+# You add minimal decoration
+@hijack_function()
+def expensive_calculation(data):
+    # Your logic unchanged
+    return complex_math(data)
+
+# Claude can experiment with:
+# - Adding caching strategies
+# - Performance profiling
+# - Mock data for testing
+# - Alternative implementations
+```
+
+### 3. Intelligent Security Analysis
+```python
+@hijack_function(SecurityStrategy())
 def process_payment(user_id, credit_card, amount):
-    # credit_card automatically redacted in logs
-    # Function works normally
+    # Your business logic unchanged
+    return payment_processor.charge(credit_card, amount)
+
+# Claude automatically detects and reports:
+# - Sensitive data in logs
+# - Security vulnerabilities
+# - Data flow patterns
 ```
 
-### 3. Environment-Specific Behavior
-```python
-@hijack_function(
-    MockStrategy(
-        mock_data={"status": "success"},
-        environments=["development", "testing"]
-    )
-)
-def external_api_call(data):
-    # Returns mock in dev/test, real API in production
-```
+### 4. Dynamic Behavior Control
+- **Runtime Strategies**: AI can apply caching, mocking, blocking without restarts
+- **A/B Testing**: Compare function implementations in real-time
+- **Environment Adaptation**: Different behaviors for dev/test/prod
+- **Performance Experiments**: Test optimizations safely
 
-### 4. Advanced Strategies
-- **ConditionalStrategy**: Different behavior based on input
-- **RedirectStrategy**: Route to alternative implementations
-- **BlockStrategy**: Disable functions without removing code
-- **AnalysisStrategy**: Deep performance and behavior analysis
-- **Time-Travel Debugging**: Replay exact application states
-
-## 🚀 Quick Start
+## 🔧 Quick Start
 
 ```bash
 # Install from source
@@ -82,81 +89,47 @@ pip install -e ".[web]"
 cd /path/to/your/project
 mystic init
 
-# Start the debugging server
+# Start the server for AI integration
 mystic serve
 
-# Discover functions in your project
+# Let Claude discover your functions
 mystic discover
 ```
 
 ## 🎯 Example Usage
 
-### Function Hijacking
+### Basic AI Integration
 ```python
 import mystic
 
+# Minimal decoration for AI visibility
+@mystic.hijack()
+def api_call(endpoint, data):
+    return requests.post(f"https://api.com/{endpoint}", json=data)
+
+# Claude can now:
+# - See all calls and responses
+# - Measure performance
+# - Suggest optimizations
+# - Test improvements
+```
+
+### Advanced Analysis
+```python
 @mystic.hijack(
     strategies=[
-        mystic.CacheStrategy(duration="1h"),
-        mystic.MockStrategy(development=True),
-        mystic.AnalysisStrategy(track_performance=True)
+        mystic.AnalysisStrategy(track_performance=True),
+        mystic.SecurityStrategy(scan_sensitive_data=True)
     ]
 )
-def expensive_api_call(data):
-    return external_api.process(data)
+def process_user_data(user_info):
+    # Your code unchanged
+    return database.save(user_info)
 ```
 
-## 💡 Real-World Impact
+## 💡 Real-World AI Integration
 
-### Performance Example
-```python
-# Your existing slow function
-def fetch_user_data(user_id):
-    response = requests.get(f"https://api.example.com/users/{user_id}")
-    return response.json()
-
-# Add Mystic's caching
-from mystic import hijack_function, CacheStrategy
-fetch_user_data = hijack_function(CacheStrategy(duration="5m"))(fetch_user_data)
-
-# Results:
-# First call: 2.5 seconds (normal)
-# Second call: 0.000 seconds (∞x faster!)
-# No code changes needed!
-```
-
-### Security Example
-```python
-# Automatically redact sensitive data in logs
-from mystic import FunctionLogger
-
-logger = FunctionLogger(filter_sensitive=True)
-
-@logger.log_function()
-def authenticate(username, password, api_key):
-    # Logs show: authenticate('john', '[REDACTED]', '[REDACTED]')
-    # Function runs normally with real values
-```
-
-
-### Command Line Tools
-```bash
-# Start the Mystic server
-mystic serve
-
-# Discover all functions in your project
-mystic discover
-
-# Inspect a specific function
-mystic inspect api_client.fetch_user_data
-
-# Check project status
-mystic status
-```
-
-### AI Assistant Integration
-
-#### Claude Desktop Setup
+### Claude Desktop Setup
 1. Initialize your project:
    ```bash
    cd /your/project
@@ -184,42 +157,88 @@ mystic status
    }
    ```
 
-4. Ask Claude:
-   - "Find all slow functions and add caching"
-   - "Show me functions that handle passwords"
-   - "Analyze performance bottlenecks"
-   - "Add logging with security filtering"
+4. AI-Powered Development:
+   - **"Find my slowest functions"** - Claude analyzes performance data
+   - **"Add caching to expensive calls"** - Claude applies optimizations
+   - **"Check for security issues"** - Claude scans for vulnerabilities
+   - **"Show me error patterns"** - Claude analyzes failure modes
+   - **"Optimize this function"** - Claude experiments with improvements
 
-## 📋 Current Status
+## 🧠 AI Assistant Capabilities
+
+Once integrated, Claude can:
+
+### Function Discovery & Analysis
+- Automatically find all decorated functions
+- Analyze call patterns and performance
+- Identify bottlenecks and optimization opportunities
+- Generate performance reports
+
+### Real-Time Optimization
+- Apply caching strategies dynamically
+- Test different implementations
+- A/B test performance improvements
+- Rollback changes instantly
+
+### Security & Debugging
+- Detect sensitive data exposure
+- Track function call flows
+- Identify error patterns
+- Debug production issues safely
+
+### Code Intelligence
+- Suggest function improvements
+- Recommend architectural changes
+- Predict performance impacts
+- Generate optimization plans
+
+## 📊 Current Status
 
 ### ✅ What's Working Now
-- **Function Hijacking**: All strategies (Cache, Mock, Block, Redirect, Analysis)
-- **Performance Tracking**: <1% overhead with detailed metrics
-- **Security Filtering**: Automatic sensitive data redaction
-- **State Management**: Time-travel debugging capabilities
-- **MCP Integration**: Claude Desktop can control your functions
-- **CLI Tools**: Discovery, inspection, and server management
+- **Function Hijacking**: Runtime interception with multiple strategies
+- **AI Integration**: Claude can discover and control functions via MCP
+- **Performance Tracking**: Real-time metrics with minimal overhead
+- **Security Analysis**: Automatic sensitive data detection
+- **CLI Tools**: Function discovery and server management
 
 ### 🚧 Coming Soon
-- Interactive REPL for live debugging
-- VS Code & Cursor IDE extensions
+- Enhanced AI analysis capabilities
 - Web dashboard for monitoring
+- IDE extensions for VS Code/Cursor
 - Distributed debugging support
 
 ## 🏗️ How It Works
 
-Gnosis Mystic acts as a transparent layer between your code and the Python runtime:
+Gnosis Mystic creates a bridge between your code and AI:
 
-1. **Function Discovery**: Automatically finds all functions in your codebase
-2. **Runtime Hijacking**: Intercepts function calls without modifying source
-3. **Strategy Application**: Applies caching, mocking, analysis, etc. based on rules
-4. **AI Integration**: Claude can analyze and optimize your functions in real-time
+1. **Minimal Decoration**: Add simple decorators to functions you want monitored
+2. **Runtime Interception**: Captures all function calls and behavior
+3. **AI Communication**: Streams data to AI assistants via MCP protocol
+4. **Dynamic Control**: AI can modify function behavior in real-time
+5. **Safe Experimentation**: Test changes without affecting core logic
 
 ```
-Your Code → Mystic Layer → Optimized Execution
-     ↑                           ↓
-     └──── Unchanged Source ─────┘
+Your Function + @hijack_function → Mystic Layer → AI Analysis
+     ↑                                              ↓
+     └────── Core Logic Preserved ←──── AI Control ──┘
 ```
+
+## 🎯 Use Cases
+
+### Development & Debugging
+- **Performance Profiling**: AI identifies slow functions automatically
+- **Error Analysis**: AI patterns in failures and suggests fixes
+- **Code Quality**: AI reviews function behavior and suggests improvements
+
+### Production Monitoring
+- **Real-time Optimization**: AI applies performance improvements live
+- **Security Monitoring**: AI detects suspicious patterns or data leaks
+- **Capacity Planning**: AI predicts scaling needs from usage patterns
+
+### Testing & QA
+- **Intelligent Mocking**: AI creates realistic test data
+- **Behavior Verification**: AI ensures functions work as expected
+- **Regression Detection**: AI spots when function behavior changes
 
 ## 🤝 Contributing
 
@@ -231,31 +250,12 @@ Apache 2.0 License - see [LICENSE](LICENSE) for details.
 
 ## 🔗 Related Projects
 
-- **gnosis-evolve**: Original function hijacking tools that form the foundation
-- **mcp-debug**: MCP debugging reference implementation (Go) - inspiration for JSON-RPC logging format
-- **Claude Desktop**: Primary AI assistant target for MCP integration
-- **Cursor IDE**: Secondary AI assistant integration target
-
-
-## 🎯 Use Cases
-
-- **API Development**: Cache expensive external calls automatically
-- **Testing**: Mock external dependencies without code changes
-- **Performance Optimization**: Find and fix bottlenecks instantly
-- **Security Auditing**: Track sensitive data flow through your system
-- **Debugging Production**: Time-travel to reproduce exact error states
-- **Multi-Environment Apps**: Different behavior in dev/test/prod
-- **Legacy Code**: Add monitoring without touching old code
-
-## 📈 Benchmarks
-
-- **Caching Performance**: 0.000s lookup time (∞x improvement)
-- **Overhead**: <1% when not actively hijacking
-- **Memory Usage**: ~100 bytes per cached entry
-- **Startup Time**: <100ms to initialize
+- **gnosis-evolve**: Original function hijacking foundation
+- **mcp-debug**: MCP debugging reference implementation (inspiration)
+- **Claude Desktop**: Primary AI assistant integration target
 
 ---
 
-**Not just debugging. A new paradigm for Python development.** 🔮✨
+**The future of Python development: Your code, enhanced by AI.** 🔮✨
 
-*Imagine if every function in your codebase could be instantly optimized, secured, and controlled by AI. That's Gnosis Mystic.*
+*Imagine Claude knowing exactly how your functions behave, optimizing them in real-time, and debugging issues before you even notice them. That's Gnosis Mystic.*
